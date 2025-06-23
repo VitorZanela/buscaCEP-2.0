@@ -7,7 +7,7 @@ class Menu
 
     def lerCep()
         puts "Digite o CEP (Somente números)"
-        cep = gets.chomp.to_i
+        cep = gets.chomp
         return cep
     end
 
