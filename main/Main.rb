@@ -8,40 +8,41 @@ require 'json'
 puts "---- BUSCA DE ENDEREÇO ----"
 
 menu = Menu.new
+cepService = ServiceBuscaCep.new
+endService = ServiceBuscaEnd.new
 
 
-
-
-opc = menu.escolherOpc()
-if opc == 1
-    buscaCep = menu.lerCep()
-    while buscaCep.to_s.length != 8
+loop do
+    opc = menu.escolherOpc()
+    if opc == 1
         buscaCep = menu.lerCep()
-        puts "ERRO!! Verifique o CEP e tente novamente!\n" if buscaCep.to_s.length != 8
-    end
+        while buscaCep.to_s.length != 8
+            puts "ERRO!! Verifique o CEP e tente novamente!\n"
+            buscaCep = menu.lerCep()
+        end
+            
+        resultado = cepService.buscar(buscaCep)
+        resulEditado = BuscaCep.from_api(JSON.parse(resultado, symbolize_names: true))
+
+        puts "----- RESULTADO -----"
+        puts resulEditado
+        puts "---------------------"
+
+    elsif opc == 2
+        dados = menu.buscaEndereco()
+        resultado = endService.buscar(dados[0],dados[1],dados[2])
+        enderecosList = JSON.parse(resultado, symbolize_names: true)
         
+        enderecosList.each do |endereco|
+            puts "----- RESULTADO -----"
+            puts BuscaCep.from_api(endereco)
+            puts "---------------------"
+        end
+    else
+        puts "Opção invalida!! Tente Novamente"
+    end
 
-    cepService = ServiceBuscaCep.new
-    resultado = cepService.buscar(buscaCep)
-    
-    resulEditado = BuscaCep.from_api(JSON.parse(resultado, symbolize_names: true))
-    puts "----- RESULTADO -----"
-    puts resulEditado
-    puts "---------------------"
-
-else
-
-    dados = menu.buscaEndereco()
-
-
-    endService = ServiceBuscaEnd.new
-    listaDados = dados[0],dados[1],dados[2]
-    resultado = endService.buscar(listaDados)
-    enderecosList = JSON.parse(resultado, symbolize_names: true)
-    
-    
-    resulEditado = BuscaCep.from_api(enderecosList.first) #Ainda apresenta erros
-    puts "----- RESULTADO -----"
-    puts resulEditado
-    puts "---------------------"
+    if !menu.desejaContinuar() 
+        break
+    end
 end
