@@ -13,11 +13,11 @@ class Menu
 
     def buscaEndereco()
         puts "Digite o Estado (EX: SP, MG, BA...)"
-        estado = gets.chomp
+        estado = gets.chomp.rstrip
         puts "Digite a cidade (EX: São Paulo, Porto Seguro, Rio de Janeiro...)"
-        cidade = gets.chomp
+        cidade = gets.chomp.rstrip
         puts "Digite o nome da Rua(Rua, Avenida, Estrada ...)"
-        rua = gets.chomp
+        rua = gets.chomp.rstrip
 
         return [estado, cidade, rua]
     end
