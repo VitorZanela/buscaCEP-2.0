@@ -35,12 +35,20 @@ loop do
     elsif opc == 2
         dados = menu.buscaEndereco()
         resultado = endService.buscar(dados[0],dados[1],dados[2])
-        enderecosList = JSON.parse(resultado, symbolize_names: true)
 
-        enderecosList.each do |endereco|
-            puts "----- RESULTADO -----"
-            puts BuscaCep.from_api(endereco)
-            puts "---------------------"
+        if resultado.nil?
+            puts "Endereço não localizado ou inválido"
+        else
+            enderecosList = JSON.parse(resultado, symbolize_names: true)
+            if enderecosList.empty?
+                puts "Endereço não localizado ou inválido"
+            else
+                enderecosList.each do |endereco|
+                    puts "----- RESULTADO -----"
+                    puts BuscaCep.from_api(endereco)
+                    puts "---------------------"
+                end
+            end
         end
     else
         puts "Opção invalida!! Tente Novamente"
