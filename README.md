@@ -19,7 +19,7 @@ Este é um projeto simples em Ruby que realiza consultas de endereço por **CEP*
 ## 🚀 Como Executar o Projeto
 
 ### Pré-requisitos
-- Ruby 3.4 instalado
+- Ruby 3.4 instalado (caso não utilize o docker)
 - Conexão com a internet (para acesso à API)
 
 ### Clonando o repositório
@@ -28,9 +28,15 @@ git clone https://github.com/seu-usuario/buscaCEP-2.0.git
 cd buscaCEP-2.0
 ```
 
-### Executando
+### Executando com Ruby
 ```
 ruby ./main/Main.rb
+```
+
+### Executando com Docker
+```
+docker build -t busca-end .
+docker run -it busca-end
 ```
 
 ## 🗂️ Estrutura do Projeto
@@ -61,7 +67,7 @@ Menu simples via terminal com opções de busca
 
 Leitura de entrada do usuário e execução das buscas
 
-🔄 Etapa 4: Tratamento de exceções (Em desenvolvimento)
+✅  Etapa 4: Tratamento de exceções 
 Tratar possíveis erros:
 
 CEP inexistente ou inválido
@@ -70,7 +76,7 @@ Falha de conexão com a API
 
 Respostas com erro ou vazias
 
-🐳 Etapa 5: Dockerização (Em desenvolvimento)
+🐳 Etapa 5: Dockerização 
 Criar um Dockerfile para empacotar o projeto
 
 Tornar possível a execução com:
